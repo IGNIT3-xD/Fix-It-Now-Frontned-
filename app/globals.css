@@ -140,7 +140,7 @@
 }
 
 .btn-secondary {
-  @apply px-6 py-5 font-semibold bg-[#f4a826] hover:bg-[#B4C5FF] transition-colors duration-300;
+  @apply px-6 py-5 font-semibold text-slate-900 bg-[#f4a826] hover:bg-[#B4C5FF] transition-colors duration-300;
 }
 
 .secondary-clr {
