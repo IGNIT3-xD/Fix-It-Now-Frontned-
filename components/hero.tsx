@@ -46,11 +46,7 @@ const programs = [
 export function HeroSection() {
     return (
         <section
-            className={cn(
-                "relative w-full min-h-screen flex flex-col overflow-hidden",
-                "bg-linear-to-b from-blue-50 via-blue-50/40 to-white",
-                "dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
-            )}
+            className={cn("relative w-full min-h-screen flex flex-col overflow-hidden")}
             role="banner"
             aria-label="Hero section"
         >
@@ -73,7 +69,7 @@ export function HeroSection() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                             </span>
-                            Trusted by 50,000+ Homeowners
+                            Trusted by 10,000+ Homeowners
                         </div>
                     </motion.div>
 
