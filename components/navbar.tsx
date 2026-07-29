@@ -32,10 +32,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Projects", href: "#" },
-    { label: "Team", href: "#" },
-    { label: "Reports", href: "#" },
+    { label: "Contact Us", href: "/contact-us" },
 ]
 
 export function Navbar() {

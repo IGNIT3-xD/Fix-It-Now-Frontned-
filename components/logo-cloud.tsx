@@ -47,14 +47,14 @@ export function LogoCloud() {
     return (
         <div className={`relative max-w-11/12 mx-auto border border-slate-200 bg-linear-to-r from-slate-100 via-transparent to-slate-100 py-6 md:border-x overflow-hidden dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:border-slate-800`}>
             <div className="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t border-slate-200/80" />
-            <InfiniteSlider gap={48} reverse speed={40} speedOnHover={80}>
+            <InfiniteSlider gap={60} reverse speed={40} speedOnHover={80}>
                 {logos.map((logo) => (
                     <div key={`logo-${logo.alt}`} className="flex items-center justify-center px-3">
                         <Image
                             alt={logo.alt}
                             height={160}
                             width={160}
-                            className={`pointer-events-none h-40 select-none opacity-75 hover:opacity-100 transition-opacity`}
+                            className={`pointer-events-none h-20 select-none opacity-75 hover:opacity-100 transition-opacity`}
                             loading="lazy"
                             src={logo.src}
                         />
