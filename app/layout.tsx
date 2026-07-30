@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, Raleway, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Navbar } from './../components/navbar';
 import { ThemeProvider } from './../components/theme-provider';
-import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -26,7 +24,7 @@ const raleway = Raleway({
 
 const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-raleway'
+  variable: '--font-manrope'
 })
 
 export const metadata: Metadata = {
@@ -50,11 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, raleway.variable, manrope.variable, "font-sans", inter.variable)}>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
-        <ThemeProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
