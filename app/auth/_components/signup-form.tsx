@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,10 +10,41 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from 'next/link';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm, Controller } from "react-hook-form";
+import { SignupFormValues, signupSchema } from "@/lib/validations/auth"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "sonner"
+import { signUpAction } from './../_actions/auth.action';
 
 export function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
+    const { register, handleSubmit, control, setValue, formState: { errors, isSubmitting } } = useForm<SignupFormValues>({
+        resolver: zodResolver(signupSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+            role: "CUSTOMER",
+            profilePicture: undefined
+        }
+    })
+
+    const onSubmit = async (data: SignupFormValues) => {
+        const formData = new FormData()
+
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("password", data.password);
+        formData.append("role", data.role);
+
+        const result = await signUpAction(formData)
+
+        if (result?.success === false) {
+            toast.error(result.message)
+        }
+    }
+
     return (
-        <form className={cn("flex flex-col gap-6", className)} {...props}>
+        <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-6", className)} {...props}>
             <FieldGroup>
                 <div className="flex flex-col items-center gap-1 text-center">
                     <h1 className="text-2xl font-bold font-[raleway]">Create your account</h1>
@@ -28,7 +60,16 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
                         placeholder="John Doe"
                         required
                         className="bg-background"
+                        {...register("name")}
                     />
+
+                    {
+                        errors.name && (
+                            <FieldDescription className="text-destructive">
+                                {errors.name.message}
+                            </FieldDescription>
+                        )
+                    }
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -38,7 +79,15 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
                         placeholder="m@example.com"
                         required
                         className="bg-background"
+                        {...register("email")}
                     />
+                    {
+                        errors.email && (
+                            <FieldDescription className="text-destructive">
+                                {errors.email.message}
+                            </FieldDescription>
+                        )
+                    }
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -48,36 +97,85 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
                         required
                         placeholder="*******"
                         className="bg-background"
+                        {...register("password")}
                     />
                     <FieldDescription>
                         Must be at least 6 characters long.
                     </FieldDescription>
+
+                    {
+                        errors.password && (
+                            <FieldDescription className="text-destructive">
+                                {errors.password.message}
+                            </FieldDescription>
+                        )
+                    }
                 </Field>
                 <Field>
-                    <FieldLabel htmlFor="profilePic">Upload your profile picture (Optional)</FieldLabel>
+                    <FieldLabel htmlFor="profilePicture">Upload your profile picture (Optional)</FieldLabel>
                     <Input
-                        id="profilePic"
+                        id="profilePicture"
                         type="file"
+                        accept="image/png,image/jpeg,image/webp"
                         className="bg-background"
+                        onChange={(e) => {
+                            setValue("profilePicture",
+                                e.target.files?.[0],
+                                {
+                                    shouldValidate: true
+                                }
+                            );
+                        }}
                     />
+
+                    {errors.profilePicture && (
+                        <FieldDescription className="text-destructive">
+                            {errors.profilePicture.message}
+                        </FieldDescription>
+                    )}
                 </Field>
-                <Select>
-                    <Field>
-                        <FieldLabel htmlFor="role">Select your role</FieldLabel>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select your role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Role</SelectLabel>
-                                <SelectItem value="user">User</SelectItem>
-                                <SelectItem value="technician">Technician</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Field>
-                </Select>
+                <Controller
+                    control={control}
+                    name="role"
+                    render={({ field }) => (
+                        <Field>
+                            <FieldLabel>Select your role</FieldLabel>
+
+                            <Select
+                                value={field.value}
+                                onValueChange={field.onChange}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select your role" />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Role</SelectLabel>
+
+                                        <SelectItem value="CUSTOMER">
+                                            Customer
+                                        </SelectItem>
+
+                                        <SelectItem value="TECHNICIAN">
+                                            Technician
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+
+                            {errors.role && (
+                                <FieldDescription className="text-destructive">
+                                    {errors.role.message}
+                                </FieldDescription>
+                            )}
+                        </Field>
+                    )}
+                />
                 <Field>
-                    <Button type="submit">Create Account</Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Creating..." : "Create Account"}
+                    </Button>
                 </Field>
                 <Field>
                     <FieldDescription className="px-6 text-center">
