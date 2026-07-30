@@ -51,6 +51,7 @@ export function Navbar() {
                         src='/logo.png'
                         width={256}
                         height={256}
+                        loading="eager"
                         alt="Fix it now - logo"
                     />
                 </Link>

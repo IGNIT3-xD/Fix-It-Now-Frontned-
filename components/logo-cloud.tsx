@@ -54,7 +54,7 @@ export function LogoCloud() {
                             alt={logo.alt}
                             height={160}
                             width={160}
-                            className={`pointer-events-none h-20 select-none opacity-75 hover:opacity-100 transition-opacity`}
+                            className={`pointer-events-none h-auto select-none opacity-75 hover:opacity-100 transition-opacity`}
                             loading="lazy"
                             src={logo.src}
                         />

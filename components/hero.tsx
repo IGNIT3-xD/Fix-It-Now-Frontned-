@@ -186,7 +186,7 @@ export function HeroSection() {
                                 key={index}
                                 whileHover={{ scale: 1.05, y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="shrink-0 cursor-pointer relative overflow-hidden w-70 h-95 sm:w-89 sm:h-120 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
+                                className="shrink-0 cursor-pointer relative overflow-hidden w-70 h-95 sm:w-89 sm:h-120 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
                             >
                                 {/* Image */}
                                 <Image
@@ -194,6 +194,7 @@ export function HeroSection() {
                                     alt={program.title}
                                     height={350}
                                     width={350}
+                                    loading="eager"
                                     className="w-full h-full object-cover"
                                 />
 
