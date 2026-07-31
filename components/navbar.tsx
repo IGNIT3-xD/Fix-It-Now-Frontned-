@@ -114,10 +114,10 @@ function ProfileMenu({ user }: UserProps) {
     if (!user.data || !user.success) {
         return (
             <div className="flex items-center gap-2 font-[raleway]">
-                <Button className="btn-secondary">
+                <Button size={"xs"} className="hidden md:inline-flex btn-secondary">
                     <Link href={'/auth/login'}>Login</Link>
                 </Button>
-                <Button className="btn-primary">
+                <Button size={"xs"} className="btn-primary">
                     <Link href={'/auth/register'}>Sign Up</Link>
                 </Button>
             </div>
