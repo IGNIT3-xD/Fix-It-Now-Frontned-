@@ -5,7 +5,6 @@ import {
     LayoutDashboard,
     LogOut,
     Menu,
-    Settings,
     User
 } from "lucide-react"
 
@@ -30,6 +29,9 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle"
 import Link from 'next/link';
 import Image from 'next/image';
+import { UserProps } from '@/lib/types';
+import { toast } from 'sonner';
+import { logoutAction } from "@/app/auth/_actions/auth.action"
 
 const navItems = [
     { label: "Home", href: "/" },
@@ -38,7 +40,12 @@ const navItems = [
     { label: "Contact Us", href: "/contact-us" },
 ]
 
-export function Navbar() {
+const handleLogout = async () => {
+    toast.success("Successfully logged out.")
+    await logoutAction()
+}
+
+export function Navbar({ user }: UserProps) {
     const [open, setOpen] = React.useState(false)
 
     return (
@@ -68,7 +75,7 @@ export function Navbar() {
                 {/* Right: Profile dropdown + mobile menu */}
                 <div className="flex items-center gap-2">
                     <ThemeToggle />
-                    <ProfileMenu />
+                    <ProfileMenu user={user} />
 
                     {/* Mobile hamburger */}
                     <Sheet open={open} onOpenChange={setOpen}>
@@ -102,14 +109,28 @@ export function Navbar() {
     )
 }
 
-function ProfileMenu() {
+function ProfileMenu({ user }: UserProps) {
+    console.log(user);
+    if (!user.data || !user.success) {
+        return (
+            <div className="flex items-center gap-2 font-[raleway]">
+                <Button className="btn-secondary">
+                    <Link href={'/auth/login'}>Login</Link>
+                </Button>
+                <Button className="btn-primary">
+                    <Link href={'/auth/register'}>Sign Up</Link>
+                </Button>
+            </div>
+        )
+    }
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full" aria-label="Open profile menu">
                     <Avatar className="size-8">
-                        <AvatarImage src="/thoughtful-artist.png" alt="User avatar" />
-                        <AvatarFallback>JD</AvatarFallback>
+                        <AvatarImage src={user.data.profilePicture ?? undefined} alt={user.data.name} />
+                        <AvatarFallback>{user.data.name.slice(0, 2)}</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
@@ -117,9 +138,12 @@ function ProfileMenu() {
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>
                         <div className="flex flex-col">
-                            <span className="text-sm font-medium text-foreground">Jane Doe</span>
+                            <span className="my-2 text-amber-500 font-bold">
+                                {user.data.role}
+                            </span>
+                            <span className="text-sm font-medium text-foreground">{user.data.name}</span>
                             <span className="text-xs font-normal text-muted-foreground">
-                                jane@acme.com
+                                {user.data.email}
                             </span>
                         </div>
                     </DropdownMenuLabel>
@@ -134,13 +158,9 @@ function ProfileMenu() {
                         <LayoutDashboard />
                         Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Settings />
-                        Settings
-                    </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">
+                <DropdownMenuItem variant="destructive" onClick={() => handleLogout()}>
                     <LogOut />
                     Log out
                 </DropdownMenuItem>

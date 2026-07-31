@@ -2,22 +2,25 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-// type SignUpState = {
-//     success: boolean,
-//     message: string,
-//     data: {
-//         id: string,
-//         name: string,
-//         email: string,
-//         profilePicture: string | undefined,
-//         status: string,
-//         role: string,
-//         created_at: string,
-//         updated_at: string
-//     },
-//     accessToken: string,
-//     refreshToken: string
-// }
+const setCookies = async (result: {
+    accessToken: string,
+    refreshToken: string
+}) => {
+    const cookieStore = await cookies();
+    // console.log(result);
+
+    cookieStore.set("accessToken", result.accessToken, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24,
+    });
+
+    cookieStore.set("refreshToken", result.refreshToken, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 7,
+    });
+}
 
 export const signUpAction = async (formData: FormData) => {
     const payload = {
@@ -42,19 +45,7 @@ export const signUpAction = async (formData: FormData) => {
         };
     }
 
-    const cookieStore = await cookies();
-
-    cookieStore.set("accessToken", result.data.accessToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24,
-    });
-
-    cookieStore.set("refreshToken", result.data.refreshToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
-    });
+    await setCookies(result.data)
 
     redirect("/");
 }
@@ -80,19 +71,37 @@ export const loginAction = async (formData: FormData) => {
         };
     }
 
-    const cookieStore = await cookies();
-
-    cookieStore.set("accessToken", result.data.accessToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24,
-    });
-
-    cookieStore.set("refreshToken", result.data.refreshToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
-    });
+    await setCookies(result.data)
 
     redirect("/");
+}
+
+export const getMeAction = async () => {
+    const cookieStore = await cookies()
+
+    const accessToken = cookieStore.get("accessToken")?.value
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.'
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/auth/me`, {
+        headers: {
+            Cookie: `accessToken=${accessToken}`
+        }
+    })
+
+    const result = await res.json()
+    return result;
+}
+
+export const logoutAction = async () => {
+    const cookieStore = await cookies()
+
+    cookieStore.delete("accessToken")
+    cookieStore.delete("refreshToken")
+    
+    redirect('/auth/login')
 }

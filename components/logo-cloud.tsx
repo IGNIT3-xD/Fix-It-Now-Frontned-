@@ -52,9 +52,9 @@ export function LogoCloud() {
                     <div key={`logo-${logo.alt}`} className="flex items-center justify-center px-3">
                         <Image
                             alt={logo.alt}
-                            height={160}
-                            width={160}
-                            className={`pointer-events-none h-auto select-none opacity-75 hover:opacity-100 transition-opacity`}
+                            height={130}
+                            width={130}
+                            className={`pointer-events-none select-none opacity-75 hover:opacity-100 transition-opacity`}
                             loading="lazy"
                             src={logo.src}
                         />
