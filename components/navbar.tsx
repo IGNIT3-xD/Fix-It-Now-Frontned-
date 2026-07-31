@@ -110,7 +110,7 @@ export function Navbar({ user }: UserProps) {
 }
 
 function ProfileMenu({ user }: UserProps) {
-    console.log(user);
+    // console.log(user);
     if (!user.data || !user.success) {
         return (
             <div className="flex items-center gap-2 font-[raleway]">
