@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Image from 'next/image';
 import { ArrowRightIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const socialProof = {
     avatars: [
@@ -90,10 +91,11 @@ export function HeroSection() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="font-[raleway] flex flex-col sm:flex-row items-center gap-4 pt-2"
                     >
-                        <Button className="btn-primary">Services<ArrowRightIcon /></Button>
-                        <Button variant={'secondary'}
-                            className="btn-secondary">
-                            Contact Us
+                        <Button className="btn-primary">
+                            <Link href={'/services'}> Services<ArrowRightIcon /></Link>
+                        </Button>
+                        <Button variant={'secondary'} className="btn-secondary">
+                            <Link href={'/contact-us'}>Contact Us</Link>
                         </Button>
                     </motion.div>
 

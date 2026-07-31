@@ -6,9 +6,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { LogoCloud } from "@/components/logo-cloud";
+import { getAllServicesAction } from './services/_actions/services.action';
 
 
-const HomePage = () => {
+const HomePage = async () => {
+  const services = await getAllServicesAction()
+
   return (
     <div className={cn(
       "bg-linear-to-b from-blue-50 via-blue-50/40 to-white",
@@ -25,7 +28,7 @@ const HomePage = () => {
             Verified local professionals delivering top-rated home repairs and craftsman solutions at fixed upfront rates.
           </p>
         </div>
-        <PopularServices />
+        <PopularServices service={services} />
         <div className="flex items-center justify-center">
           <Button className="btn-secondary mt-3">
             <Link href={'/services'} className="inline-flex items-center gap-1.5">View All Services <ArrowRight /></Link>

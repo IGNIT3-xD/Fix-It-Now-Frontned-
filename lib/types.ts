@@ -1,4 +1,6 @@
-export type UserType = {
+import { JSX } from "react/jsx-runtime"
+
+type UserType = {
     success: boolean,
     message: string,
     data: {
@@ -19,4 +21,30 @@ export type UserType = {
 
 export type UserProps = {
     user: UserType
+}
+
+type ServiceType = {
+    sucess: boolean,
+    message: string,
+    data:
+    {
+        map(arg0: (service: any, index: any) => JSX.Element): import("react").ReactNode
+        length: number
+        id: string,
+        title: string,
+        description: string,
+        price: number,
+        isActive: boolean,
+        thumbnail: string,
+        createdAt: string,
+        updatedAt: string,
+        technicianId: string,
+        categoryId: string,
+        category: string[],
+        technician: string[]
+    }
+}
+
+export type ServiceProps = {
+    service: ServiceType
 }
