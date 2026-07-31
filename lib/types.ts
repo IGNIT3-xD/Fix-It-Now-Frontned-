@@ -1,5 +1,4 @@
-import { JSX } from "react/jsx-runtime"
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type UserType = {
     success: boolean,
     message: string,
@@ -12,9 +11,7 @@ type UserType = {
         role: string,
         created_at: string,
         updated_at: string,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         technicians: null | any,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         myBookings: any
     }
 }
@@ -23,28 +20,29 @@ export type UserProps = {
     user: UserType
 }
 
+export type ServiceData = {
+    map: any
+    id: string,
+    title: string,
+    description: string,
+    price: number,
+    isActive: boolean,
+    thumbnail: string,
+    createdAt: string,
+    updatedAt: string,
+    technicianId: string,
+    categoryId: string,
+    category: any,
+    technician: any
+}
+
 type ServiceType = {
     sucess: boolean,
     message: string,
-    data:
-    {
-        map(arg0: (service: any, index: any) => JSX.Element): import("react").ReactNode
-        length: number
-        id: string,
-        title: string,
-        description: string,
-        price: number,
-        isActive: boolean,
-        thumbnail: string,
-        createdAt: string,
-        updatedAt: string,
-        technicianId: string,
-        categoryId: string,
-        category: string[],
-        technician: string[]
-    }
+    data: ServiceData
 }
 
 export type ServiceProps = {
     service: ServiceType
 }
+

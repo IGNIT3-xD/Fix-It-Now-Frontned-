@@ -91,7 +91,7 @@ export function HeroSection() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="font-[raleway] flex flex-col sm:flex-row items-center gap-4 pt-2"
                     >
-                        <Button className="btn-primary">
+                        <Button asChild className="btn-primary">
                             <Link href={'/services'}> Services<ArrowRightIcon /></Link>
                         </Button>
                         <Button variant={'secondary'} className="btn-secondary">

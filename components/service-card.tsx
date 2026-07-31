@@ -1,7 +1,7 @@
 import { MapPin, CheckCircle2, Star, ArrowRight } from "lucide-react";
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ServiceProps } from "@/lib/types";
+import { ServiceData, ServiceProps } from "@/lib/types";
 import Link from 'next/link';
 
 const truncate = (text: string, maxWords: number) => {
@@ -13,7 +13,7 @@ const truncate = (text: string, maxWords: number) => {
 
 export function PopularServices({ service }: ServiceProps) {
     // console.log(service);
-    if (!service?.data || service?.data.length === 0) {
+    if (!service?.data) {
         return (
             <div className="font-medium font-[raleway] text-lg lg:text-xl">
                 <h1>No Service Found</h1>
@@ -23,8 +23,8 @@ export function PopularServices({ service }: ServiceProps) {
 
     return (
         <section className="py-5">
-            <div className="grid  grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
-                {service.data.map((service) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {service.data.map((service: ServiceData) => (
                     <div
                         key={service.id}
                         className="group bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 hover:border-blue-500/50 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden relative"
