@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from 'react'
-import { Field } from '@/components/ui/field';
+import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -12,8 +12,7 @@ const SearchBar = () => {
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-    const handleSearch = (value: string) => {
-
+    const updateParam = (key: string, value: string) => {
         if (debounceRef.current) {
             clearTimeout(debounceRef.current)
         }
@@ -22,24 +21,37 @@ const SearchBar = () => {
             const params = new URLSearchParams(searchParams.toString())
 
             if (value) {
-                params.set('title', value)
+                params.set(key, value)
             } else {
-                params.delete('title')
+                params.delete(key)
             }
 
             router.replace(`${path}?${params.toString()}`)
-        }, 500)
+        }, 300)
     }
 
     return (
-        <Field orientation="horizontal" className='max-w-80'>
-            <Input
-                defaultValue={searchParams.get('title') ? searchParams.get('title')?.toString() : ''}
-                onChange={(e) => handleSearch(e.target.value)}
-                type="search"
-                placeholder="Search..."
-            />
-        </Field>
+        <div className="flex flex-col sm:flex-row gap-3">
+            <Field orientation="horizontal" className='max-w-84 flex flex-col items-start'>
+                <FieldLabel>Search by title</FieldLabel>
+                <Input
+                    defaultValue={searchParams.get('title') ?? ''}
+                    onChange={(e) => updateParam('title', e.target.value)}
+                    type="search"
+                    placeholder="Search services..."
+                />
+            </Field>
+
+            <Field orientation="horizontal" className='max-w-84 flex flex-col items-start'>
+                <FieldLabel>Search by location</FieldLabel>
+                <Input
+                    defaultValue={searchParams.get('location') ?? ''}
+                    onChange={(e) => updateParam('location', e.target.value)}
+                    type="search"
+                    placeholder="Location..."
+                />
+            </Field>
+        </div>
     )
 }
 

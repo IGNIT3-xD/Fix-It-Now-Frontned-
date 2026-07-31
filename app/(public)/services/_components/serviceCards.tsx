@@ -11,7 +11,7 @@ const truncate = (text: string, maxWords: number) => {
     return words.slice(0, maxWords).join(" ") + "...";
 }
 
-export function PopularServices({ service }: ServiceProps) {
+export function ServiceCards({ service }: ServiceProps) {
     // console.log(service);
     if (!service.data) {
         return (
@@ -21,11 +21,10 @@ export function PopularServices({ service }: ServiceProps) {
         )
     }
 
-    const popularServices = service.data.slice(0, 4);
     return (
         <section className="py-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {popularServices.map((service: ServiceData) => (
+                {service.data.map((service: ServiceData) => (
                     <div
                         key={service.id}
                         className="group bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 hover:border-blue-500/50 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden relative"

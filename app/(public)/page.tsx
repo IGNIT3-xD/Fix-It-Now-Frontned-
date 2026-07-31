@@ -6,11 +6,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { LogoCloud } from "@/components/logo-cloud";
-import { getAllServicesAction } from './services/_actions/services.action';
+import { popularServicesAction } from './services/_actions/services.action';
 
 
 const HomePage = async () => {
-  const services = await getAllServicesAction()
+  const services = await popularServicesAction()
+  // console.log(services.data.slice(0, 2));
 
   return (
     <div className={cn(
