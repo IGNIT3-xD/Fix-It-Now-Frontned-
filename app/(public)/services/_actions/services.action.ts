@@ -1,4 +1,6 @@
 "use server"
+import { cookies } from 'next/headers';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export const getAllServicesAction = async (
     searchParams?: { [key: string]: string | string[] | undefined }
@@ -45,5 +47,47 @@ export const getServiceByIdAction = async (id: string) => {
     })
 
     const result = await res.json()
+    return result
+}
+
+type PrevState = {
+    success: boolean;
+    message: string;
+}
+
+export const createBookingAction = async (prevState: PrevState, formData: FormData) => {
+    const cookieStore = await cookies()
+    const ROLE = ['CUSTOMER', 'ADMIN']
+
+    const accessToken = cookieStore.get("accessToken")?.value
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.'
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (!ROLE.includes(role.role)) {
+        return {
+            success: false,
+            message: "Unauthorized",
+        };
+    }
+
+    const technicianId = formData.get("technicianId") as string;
+    const serviceId = formData.get("serviceId") as string;
+    const scheduledAt = formData.get("scheduledAt") as string;
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/bookings`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`
+        },
+        body: JSON.stringify({ technicianId, serviceId, scheduledAt })
+    })
+
+    const result = await res.json();
     return result
 }

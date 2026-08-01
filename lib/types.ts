@@ -78,3 +78,9 @@ export type ServiceDetProps = {
     service: ServiceDetailsData,
     user: UserType | null;
 }
+
+export type CreateBookingPayload = {
+  technicianId: string;
+  serviceId: string;
+  scheduledAt: string;
+}

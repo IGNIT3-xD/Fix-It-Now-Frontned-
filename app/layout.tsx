@@ -50,7 +50,7 @@ export default function RootLayout({
     <html lang="en" className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, raleway.variable, manrope.variable, "font-sans", inter.variable)}>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         <ThemeProvider>{children}</ThemeProvider>
-        <Toaster position="top-right" />
+        <Toaster position="top-right" richColors={true} />
       </body>
     </html>
   );

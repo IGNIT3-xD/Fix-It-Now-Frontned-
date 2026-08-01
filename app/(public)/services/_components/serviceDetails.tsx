@@ -3,7 +3,7 @@
 import { Award, Calendar, CheckCircle2, Clock, MapPin, ShieldCheck, Star, UserCheck, Zap } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -12,14 +12,52 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 import { ServiceDetProps } from "@/lib/types";
+import { DatePickerInput } from './bookingForm';
+import { createBookingAction } from "../_actions/services.action";
+import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
 
 const ServiceDetails = ({ service, user }: ServiceDetProps) => {
     const [selectedTab, setSelectedTab] = useState<"overview" | "reviews">("overview");
+    const [scheduledDate, setScheduledDate] = useState<Date>();
+    const [state, formAction, isPending] = useActionState(createBookingAction, null);
+    const [open, setOpen] = useState(false);
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!state) return
+
+        if (state?.success) {
+            toast.success(state?.message ?? "Booking created successfully.")
+            router.push(`/dashboard/${user?.data.role.toLowerCase()}`)
+        } else {
+            toast.error(state?.message ?? "Something went wrong")
+        }
+    }, [router, state, user?.data.role]);
+
     // console.log(service);
     // console.log(user);
-    
+
     const data = service.data
+
+    const handleSubmit = (e: any) => {
+        if (!scheduledDate) {
+            e.preventDefault()
+            toast.error("Please select a schedule date before confirming.")
+            return
+        }
+    }
 
     return (
         <div>
@@ -287,10 +325,66 @@ const ServiceDetails = ({ service, user }: ServiceDetProps) => {
                         </div>
 
                         {/* Direct Booking CTA Button */}
-                        <Button disabled={user?.success === false || !user?.data || !['CUSTOMER', 'ADMIN'].includes(user.data?.role)}>
+                        {/* <Button disabled={user?.success === false || !user?.data || !['CUSTOMER', 'ADMIN'].includes(user.data?.role)}>
                             <Zap className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
                             Book This Service Now
-                        </Button>
+                        </Button> */}
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    disabled={
+                                        user?.success === false ||
+                                        !user?.data ||
+                                        !["CUSTOMER", "ADMIN"].includes(user.data?.role)
+                                    }
+                                    className="group"
+                                >
+                                    <Zap className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
+                                    Book This Service Now
+                                </Button>
+                            </DialogTrigger>
+
+                            <DialogContent className="sm:max-w-lg">
+                                <form action={formAction} onSubmit={handleSubmit}>
+                                    <DialogHeader>
+                                        <DialogTitle>Book Service</DialogTitle>
+                                        <DialogDescription>
+                                            Confirm your booking details before submitting.
+                                        </DialogDescription>
+                                    </DialogHeader>
+
+                                    <div className="space-y-4 py-4">
+                                        <div>
+                                            <p className="font-medium">{data.title}</p>
+                                            <p className="text-sm text-muted-foreground">
+                                                {data.category?.name}
+                                            </p>
+                                        </div>
+
+                                        {/* Hidden fields */}
+                                        <input type="hidden" name="technicianId" value={data.technician.id} />
+                                        <input type="hidden" name="serviceId" value={data.id} />
+
+                                        {/* This component should submit a field named "scheduledAt" */}
+                                        <DatePickerInput
+                                            date={scheduledDate}
+                                            onDateChange={setScheduledDate} />
+                                    </div>
+
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button type="button" variant="outline">
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+
+                                        <Button type="submit" disabled={isPending}>
+                                            {isPending ? "Booking..." : "Confirm Booking"}
+                                        </Button>
+                                    </DialogFooter>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
 
                         {/* Guarantee badges */}
                         <div className="font-[manrope] space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800/40 mt-3 text-xs">
