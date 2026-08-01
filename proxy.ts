@@ -28,6 +28,23 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL('/auth/login', request.url))
     }
 
+    let role = null
+    if (decodedAccessToken) {
+        role = decodedAccessToken.role
+    }
+
+    if (pathname.startsWith('/dashboard/customer') && role !== 'CUSTOMER') {
+        return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    if (pathname.startsWith('/dashboard/technician') && role !== 'TECHNICIAN') {
+        return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    if (pathname.startsWith('/dashboard/admin') && role !== 'ADMIN') {
+        return NextResponse.redirect(new URL('/', request.url))
+    }
+
     return NextResponse.next()
 }
 

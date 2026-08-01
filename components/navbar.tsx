@@ -33,19 +33,19 @@ import { UserProps } from '@/lib/types';
 import { toast } from 'sonner';
 import { logoutAction } from "@/app/auth/_actions/auth.action"
 
-const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Services", href: "/services" },
-    { label: "Dashboard", href: "/dashboard" },
-    { label: "Contact Us", href: "/contact-us" },
-]
-
 const handleLogout = async () => {
     toast.success("Successfully logged out.")
     await logoutAction()
 }
 
 export function Navbar({ user }: UserProps) {
+    const navItems = [
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "Dashboard", href: `/dashboard/${user?.data?.role.toLowerCase() ?? "customer"}` },
+        { label: "Contact Us", href: "/contact-us" },
+    ]
+
     const [open, setOpen] = React.useState(false)
 
     return (
@@ -154,9 +154,11 @@ function ProfileMenu({ user }: UserProps) {
                         <User />
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <LayoutDashboard />
-                        Dashboard
+                    <DropdownMenuItem asChild>
+                        <Link href={`/dashboard/${user?.data?.role.toLowerCase() ?? "customer"}`}>
+                            <LayoutDashboard />
+                            Dashboard
+                        </Link>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
