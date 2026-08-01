@@ -44,3 +44,37 @@ export type ServiceType = {
 export type ServiceProps = {
     service: ServiceType;
 };
+
+export type ServiceDetailsData = {
+    data: any
+    id: string,
+    title: string,
+    description: string,
+    price: number,
+    isActive: boolean,
+    thumbnail: string,
+    createdAt: string,
+    updatedAt: string,
+    category: {
+        id: string,
+        name: string
+    },
+    technician: {
+        id: string,
+        experience: number,
+        location: string,
+        isVerified: boolean,
+        avgRating: number,
+        totalReviews: number,
+        createdAt: string,
+        updatedAt: string,
+        userId: string,
+        availabilities: any
+    },
+    bookings: any
+}
+
+export type ServiceDetProps = {
+    service: ServiceDetailsData,
+    user: UserType | null;
+}
