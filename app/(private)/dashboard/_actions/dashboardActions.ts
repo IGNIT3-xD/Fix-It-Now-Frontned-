@@ -2,6 +2,7 @@
 import { cookies } from 'next/headers';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { PrevState } from '@/lib/types';
+import { revalidatePath } from 'next/cache'
 
 export const createServiceAction = async (prevState: PrevState, formData: FormData) => {
     const cookieStore = await cookies()
@@ -45,6 +46,10 @@ export const createServiceAction = async (prevState: PrevState, formData: FormDa
     })
 
     const result = await res.json();
+    if (result.success) {
+        revalidatePath('/dashboard/technician/services')
+    }
+
     return result
 }
 
@@ -144,6 +149,9 @@ export const updateBookingStatus = async (id: string, status: string) => {
         })
 
         const result = await res.json()
+        if (result.success) {
+            revalidatePath('/dashboard/technician/bookings')
+        }
 
         if (!res.ok) {
             return {
@@ -258,6 +266,9 @@ export const updateTechnicianProfileAction = async (prevState: PrevState, formDa
     })
 
     const result = await res.json()
+    if (result.success) {
+        revalidatePath('/dashboard/technician/profile')
+    }
     return result
 }
 
@@ -310,4 +321,122 @@ export const updateAvailabilityAction = async (
             message: 'Failed to update availability',
         }
     }
+}
+
+export const getCustomerBookings = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/bookings`, {
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const cancelBookingAction = async (id: string) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/bookings/${id}/cancel`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+        revalidatePath('/dashboard/customer/bookings')
+    }
+
+    return result
+}
+
+export const paymentAction = async (bookingId: string) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/payments/create`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ bookingId }),
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+        revalidatePath('/dashboard/customer/bookings')
+    }
+
+    return result
+}
+
+export const reviewsAction = async (prevState: PrevState, formData: FormData) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const bookingId = formData.get("bookingId") as string
+    const rating = Number(formData.get("rating"))
+    const comment = formData.get("comment") as string
+
+    if (!rating || rating < 1 || rating > 5) {
+        return {
+            success: false,
+            message: 'Please select a rating between 1 and 5.',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/reviews`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ bookingId, rating, comment }),
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+        revalidatePath('/dashboard/customer/bookings')
+    }
+
+    return result
 }

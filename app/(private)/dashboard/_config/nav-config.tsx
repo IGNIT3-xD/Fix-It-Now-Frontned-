@@ -7,8 +7,7 @@ import {
     CalendarIcon,
     ClipboardListIcon,
     WrenchIcon,
-    StarIcon,
-    SettingsIcon,
+    StarIcon
 } from "lucide-react"
 
 export type NavItem = {
@@ -34,9 +33,8 @@ export const NAV_BY_ROLE: Record<string, NavItem[]> = {
     ],
     CUSTOMER: [
         { title: "Dashboard", url: "/dashboard/customer", icon: <LayoutDashboardIcon /> },
-        { title: "My Bookings", url: "/dashboard/bookings", icon: <CalendarIcon /> },
-        { title: "Reviews", url: "/dashboard/reviews", icon: <StarIcon /> },
-        { title: "Settings", url: "/dashboard/settings", icon: <SettingsIcon /> },
+        { title: "My Bookings", url: "/dashboard/customer/bookings", icon: <CalendarIcon /> },
+        { title: "Reviews", url: "/dashboard/customer/reviews", icon: <StarIcon /> },
     ],
 }
 

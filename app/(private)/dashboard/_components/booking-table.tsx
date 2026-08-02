@@ -145,7 +145,7 @@ export function BookingsTable({ bookings }: BookingsTableProps) {
                 toast.error(result.message)
             }
         } catch (error) {
-            console.error('[v0] Error updating status:', error)
+            console.error('Error updating status:', error)
             toast.error('Failed to update booking status')
         } finally {
             setIsUpdating(false)

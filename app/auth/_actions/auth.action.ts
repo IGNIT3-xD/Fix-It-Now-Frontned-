@@ -73,7 +73,7 @@ export const loginAction = async (formData: FormData) => {
 
     await setCookies(result.data)
 
-    redirect("/");
+    redirect("/services");
 }
 
 // Get profile, technician profile and availablities
