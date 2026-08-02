@@ -35,6 +35,7 @@ export function ReviewDialog({ bookingId, disabled }: ReviewDialogProps) {
 
         if (state.success) {
             toast.success(state.message ?? 'Review submitted successfully.')
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setOpen(false)
         } else {
             toast.error(state.message ?? 'Something went wrong')

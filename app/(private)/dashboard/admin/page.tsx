@@ -1,5 +1,3 @@
-// app/(private)/dashboard/admin/page.tsx
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DataTable } from "@/components/data-table"
 import { SectionCards } from "@/components/section-cards"
 
@@ -8,7 +6,7 @@ export default function Page() {
     <>
       <SectionCards />
       <div className="px-4 lg:px-6">
-        <ChartAreaInteractive />
+        {/* <ChartAreaInteractive /> */}
       </div>
       <DataTable data={[]} />
     </>

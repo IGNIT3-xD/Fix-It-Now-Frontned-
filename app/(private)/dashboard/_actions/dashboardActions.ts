@@ -440,3 +440,63 @@ export const reviewsAction = async (prevState: PrevState, formData: FormData) =>
 
     return result
 }
+
+export const getMyReviewsAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'CUSTOMER') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/reviews/my-reviews`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const customerDashboardStatsAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'CUSTOMER') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/dashboard/customer`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}

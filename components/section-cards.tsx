@@ -35,22 +35,30 @@ export async function SectionCards() {
   let cardsData = defaultCards
 
   if (stats.success && stats.data) {
+    const dashboardData = stats.data as {
+      totalBookings?: number
+      totalServices?: number
+      pendingBookings?: number
+      completedBookings?: number
+      activeServices?: number
+    }
+
     cardsData = [
       {
         title: 'Total Bookings',
-        value: stats.data.totalBookings?.toString() || '0',
-        trend: `${stats.data.pendingBookings || 0} pending`,
+        value: dashboardData.totalBookings?.toString() || '0',
+        trend: `${dashboardData.pendingBookings || 0} pending`,
         trendUp: true,
-        description: `${stats.data.completedBookings || 0} completed`,
-        footer: `${stats.data.totalBookings || 0} total bookings`,
+        description: `${dashboardData.completedBookings || 0} completed`,
+        footer: `${dashboardData.totalBookings || 0} total bookings`,
       },
       {
         title: 'Total Services',
-        value: stats.data.totalServices?.toString() || '0',
-        trend: `${stats.data.activeServices || 0} active`,
+        value: dashboardData.totalServices?.toString() || '0',
+        trend: `${dashboardData.activeServices || 0} active`,
         trendUp: true,
         description: 'Available services',
-        footer: `${stats.data.totalServices || 0} services total`,
+        footer: `${dashboardData.totalServices || 0} services total`,
       }
     ]
   }

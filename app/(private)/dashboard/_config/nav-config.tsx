@@ -19,11 +19,10 @@ export type NavItem = {
 export const NAV_BY_ROLE: Record<string, NavItem[]> = {
     ADMIN: [
         { title: "Dashboard", url: "/dashboard/admin", icon: <LayoutDashboardIcon /> },
-        { title: "Users", url: "/dashboard/users", icon: <UsersIcon /> },
-        { title: "Technicians", url: "/dashboard/technicians", icon: <WrenchIcon /> },
+        { title: "Users", url: "/dashboard/admin/users", icon: <UsersIcon /> },
+        { title: "Technicians", url: "/dashboard/admin/technicians", icon: <WrenchIcon /> },
         { title: "Bookings", url: "/dashboard/bookings", icon: <ClipboardListIcon /> },
-        { title: "Analytics", url: "/dashboard/analytics", icon: <ChartBarIcon /> },
-        { title: "Categories", url: "/dashboard/categories", icon: <FolderIcon /> },
+        { title: "Categories", url: "/dashboard/admin/categories", icon: <FolderIcon /> },
     ],
     TECHNICIAN: [
         { title: "Dashboard", url: "/dashboard/technician", icon: <LayoutDashboardIcon /> },

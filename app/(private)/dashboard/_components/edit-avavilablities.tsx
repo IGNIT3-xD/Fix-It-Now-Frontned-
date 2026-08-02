@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState } from 'react'
@@ -39,17 +38,21 @@ export function EditAvailabilitiesDialog({
     onSuccess,
 }: EditAvailabilitiesDialogProps) {
     const [availabilities, setAvailabilities] = useState<Availability[]>(initialAvailabilities)
-    const [isUpdating, setIsUpdating] = useState(false)
+    // const [isUpdating, setIsUpdating] = useState(false)
     const [savingIndex, setSavingIndex] = useState<number | null>(null)
 
-    const handleAvailabilityChange = (
+    const handleAvailabilityChange = <K extends keyof Availability>(
         index: number,
-        field: keyof Availability,
-        value: any
+        field: K,
+        value: Availability[K]
     ) => {
-        const updated = [...availabilities]
-        updated[index][field] = value
-        setAvailabilities(updated)
+        setAvailabilities((prev) =>
+            prev.map((availability, availabilityIndex) =>
+                availabilityIndex === index
+                    ? { ...availability, [field]: value }
+                    : availability
+            )
+        )
     }
 
     const handleSaveAvailability = async (index: number) => {
