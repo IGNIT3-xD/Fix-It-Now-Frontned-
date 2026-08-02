@@ -17,7 +17,7 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
   // console.log(role);
   const items = (role && NAV_BY_ROLE[role]) || DEFAULT_NAV
   return (
-    <Sidebar className="pt-18" collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarContent>
         <NavMain items={items} />
       </SidebarContent>

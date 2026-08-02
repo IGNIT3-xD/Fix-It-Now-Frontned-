@@ -76,6 +76,7 @@ export const loginAction = async (formData: FormData) => {
     redirect("/");
 }
 
+// Get profile, technician profile and availablities
 export const getMeAction = async () => {
     const cookieStore = await cookies()
 

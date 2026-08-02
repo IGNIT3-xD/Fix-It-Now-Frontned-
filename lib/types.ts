@@ -80,7 +80,26 @@ export type ServiceDetProps = {
 }
 
 export type CreateBookingPayload = {
-  technicianId: string;
-  serviceId: string;
-  scheduledAt: string;
+    technicianId: string;
+    serviceId: string;
+    scheduledAt: string;
+}
+
+export type PrevState = {
+    success: boolean;
+    message: string;
+}
+
+export type DashSerCards = {
+    id: string,
+    title: string,
+    description: string,
+    price: number,
+    isActive: boolean,
+    thumbnail: string,
+    createdAt: string,
+    updatedAt: string,
+    technicianId: string,
+    categoryId: string,
+    category: { id: string, name: string }
 }

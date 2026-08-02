@@ -1,6 +1,7 @@
 "use server"
 import { cookies } from 'next/headers';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { PrevState } from '@/lib/types';
 
 export const getAllServicesAction = async (
     searchParams?: { [key: string]: string | string[] | undefined }
@@ -48,11 +49,6 @@ export const getServiceByIdAction = async (id: string) => {
 
     const result = await res.json()
     return result
-}
-
-type PrevState = {
-    success: boolean;
-    message: string;
 }
 
 export const createBookingAction = async (prevState: PrevState, formData: FormData) => {

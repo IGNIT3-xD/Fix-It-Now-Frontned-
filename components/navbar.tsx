@@ -4,8 +4,7 @@ import * as React from "react"
 import {
     LayoutDashboard,
     LogOut,
-    Menu,
-    User
+    Menu
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -150,10 +149,6 @@ function ProfileMenu({ user }: UserProps) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <User />
-                        Profile
-                    </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                         <Link href={`/dashboard/${user?.data?.role.toLowerCase() ?? "customer"}`}>
                             <LayoutDashboard />

@@ -28,10 +28,9 @@ export const NAV_BY_ROLE: Record<string, NavItem[]> = {
     ],
     TECHNICIAN: [
         { title: "Dashboard", url: "/dashboard/technician", icon: <LayoutDashboardIcon /> },
-        { title: "My Services", url: "/dashboard/services", icon: <ListIcon /> },
-        { title: "Bookings", url: "/dashboard/bookings", icon: <CalendarIcon /> },
-        { title: "Reviews", url: "/dashboard/reviews", icon: <StarIcon /> },
-        { title: "Settings", url: "/dashboard/settings", icon: <SettingsIcon /> },
+        { title: "My Services", url: "/dashboard/technician/services", icon: <ListIcon /> },
+        { title: "Bookings", url: "/dashboard/technician/bookings", icon: <CalendarIcon /> },
+        { title: "Technician Profile", url: "/dashboard/technician/profile", icon: <StarIcon /> }
     ],
     CUSTOMER: [
         { title: "Dashboard", url: "/dashboard/customer", icon: <LayoutDashboardIcon /> },
