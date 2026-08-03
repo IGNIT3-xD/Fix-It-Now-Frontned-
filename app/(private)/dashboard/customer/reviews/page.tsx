@@ -6,7 +6,7 @@ const MyReviewsPage = async () => {
   const reviews = await getMyReviewsAction()
 
   return (
-    <div className="px-4 lg:px-6 py-6">
+    <div className="px-4 lg:px-6">
       <div className="mb-6">
         <h1 className="text-xl md:text-2xl font-[raleway] font-bold">
           My <span className="secondary-clr">Reviews ({reviews?.data?.length ?? 0})</span>

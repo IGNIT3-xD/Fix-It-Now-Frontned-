@@ -1,14 +1,21 @@
-import { AlertCircle, Wallet, MessageSquare, Calendar } from 'lucide-react'
+import { Wallet, MessageSquare, Calendar, AlertCircle } from 'lucide-react'
 import { customerDashboardStatsAction, getCustomerBookings } from '../_actions/dashboardActions'
 import { PaymentHistory } from '../_components/payment-history'
 import { StatsCard } from '../_components/stats-card'
 import { StatsChart } from '../_components/stats-chart'
+import { getMeAction } from './../../../auth/_actions/auth.action';
+import { redirect } from 'next/navigation';
 
 async function DashboardContent() {
+  const user = await getMeAction()
   const statsResult = await customerDashboardStatsAction()
   const bookingsResult = await getCustomerBookings()
 
-  if (!statsResult.success || !bookingsResult.success) {
+  if (user.data?.role !== 'CUSTOMER') {
+    redirect('/auth/login')
+  }
+
+  if (!statsResult.success) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center text-center">
@@ -20,6 +27,7 @@ async function DashboardContent() {
     )
   }
 
+
   const { myTotalBookings = 0, totalPaid = 0, totalReviewsGiven = 0 } = statsResult.data || {}
 
   // Filter bookings that have been paid
@@ -30,7 +38,7 @@ async function DashboardContent() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold font-[raleway]">Dashboard</h1>

@@ -500,3 +500,209 @@ export const customerDashboardStatsAction = async () => {
     const result = await res.json()
     return result
 }
+
+export const adminDashboardStatsAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'ADMIN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/dashboard/admin`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const technicianDashboardStatsAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'TECHNICIAN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/dashboard/technician`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const getAllUsersAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'ADMIN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/admin/users`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const updateUsersStatusActions = async (id: string, prevState: PrevState, formData: FormData) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'ADMIN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const status = formData.get('status') as string
+
+    if (status !== 'ACTIVE' && status !== 'BLOCKED') {
+        return {
+            success: false,
+            message: 'Invalid status value.',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/admin/users/${id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ status })
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+        revalidatePath('/dashboard/admin/users')
+    }
+
+    return result
+}
+
+export const getAllCategoriesAction = async () => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'ADMIN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/categories`, {
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        }
+    })
+
+    const result = await res.json()
+    return result
+}
+
+export const createCategoriesAction = async (prevState: PrevState, formData: FormData) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
+
+    if (!accessToken) {
+        return {
+            success: false,
+            message: 'User not logged in.',
+        }
+    }
+
+    const role = jwt.verify(accessToken, process.env.JWT_ACCESS as string) as JwtPayload
+    if (role.role !== 'ADMIN') {
+        return {
+            success: false,
+            message: 'Unauthorized',
+        }
+    }
+
+    const getName = formData.get('name') as string
+    const name = getName.toUpperCase()
+
+    const res = await fetch(`${process.env.BACKEND_API}/api/admin/categories`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ name })
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+        revalidatePath('/dashboard/admin/categories')
+    }
+
+    return result
+}

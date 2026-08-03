@@ -5,7 +5,7 @@ const Bookings = async () => {
     const bookings = await getTechnicianBookings()
     // console.log(bookings);
     return (
-        <div className="px-4 lg:px-6 py-6">
+        <div className="px-4 lg:px-6">
             <div className="mb-6">
                 <h1 className="text-xl md:text-2xl font-[raleway] font-bold">
                     All <span className="secondary-clr">Bookings ({bookings?.data?.length})</span>

@@ -44,7 +44,7 @@ const ServiceDetails = ({ service, user }: ServiceDetProps) => {
         } else {
             toast.error(state?.message ?? "Something went wrong")
         }
-    }, [router, state, user?.data.role]);
+    }, [router, state, user?.data?.role]);
 
     // console.log(service);
     // console.log(user);

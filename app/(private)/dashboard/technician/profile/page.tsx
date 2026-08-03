@@ -8,7 +8,7 @@ export default async function TechnicianProfilePage() {
     const technician = user.technicians
 
     return (
-        <div className="px-4 lg:px-6 py-6">
+        <div className="px-4 lg:px-6">
             <TechnicianProfileView user={user} technician={technician} />
         </div>
     )
