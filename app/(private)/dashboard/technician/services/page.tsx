@@ -17,9 +17,14 @@ const MyService = async () => {
                 </h1>
                 <CreateServiceForm categories={categories?.data} />
             </div>
-            <div>
+
+            {services.success && services.data.services.length > 0 ? (
                 <ServiceCards service={services?.data?.services} />
-            </div>
+            ) : (
+                <div className="text-center py-12">
+                    <p className="text-muted-foreground">No service found</p>
+                </div>
+            )}
         </div>
     )
 }

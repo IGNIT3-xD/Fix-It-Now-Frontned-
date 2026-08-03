@@ -5,6 +5,13 @@ import { getMeAction } from '@/app/auth/_actions/auth.action';
 import { technicianDashboardStatsAction } from '../_actions/dashboardActions';
 import { Star } from 'lucide-react';
 import { StatsChart } from '../_components/stats-chart-technician';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'Technician Dashboard - Fix It Now',
+  },
+}
 
 async function DashboardContent() {
   const user = await getMeAction()

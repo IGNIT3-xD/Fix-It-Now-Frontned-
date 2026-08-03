@@ -7,6 +7,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { LogoCloud } from "@/components/logo-cloud";
 import { popularServicesAction } from './services/_actions/services.action';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Home - Fix It Now',
+    },
+}
 
 
 const HomePage = async () => {

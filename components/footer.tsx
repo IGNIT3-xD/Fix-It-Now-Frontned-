@@ -37,7 +37,7 @@ export function Footer() {
                                 <input
                                     type="text"
                                     placeholder="First name"
-                                    className="w-full px-5 py-3.5 rounded-xl sm:rounded-2xl bg-transparent border border-white/70 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/80 focus:border-white text-sm font-medium transition-all"
+                                    className="w-full px-5 py-3.5 rounded-sm bg-transparent border border-white/70 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/80 focus:border-white text-sm font-medium transition-all"
                                 />
                             </div>
 
@@ -46,7 +46,7 @@ export function Footer() {
                                     type="email"
                                     required
                                     placeholder="Email address"
-                                    className="w-full px-5 py-3.5 rounded-xl sm:rounded-2xl bg-transparent border border-white/70 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/80 focus:border-white text-sm font-medium transition-all"
+                                    className="w-full px-5 py-3.5 rounded-sm bg-transparent border border-white/70 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/80 focus:border-white text-sm font-medium transition-all"
                                 />
                             </div>
 
@@ -78,7 +78,7 @@ export function Footer() {
 
                             {/* Tagline / Description */}
                             <p className="font-[manrope] text-slate-500 dark:text-slate-300 text-sm leading-relaxed max-w-sm my-6 font-medium">
-                                Clarity gives you the blocks and components you need to create Link truly professional website.
+                                Your Trusted Home Service Platform
                             </p>
                         </div>
 
@@ -92,7 +92,7 @@ export function Footer() {
                                 <FaXTwitter className="w-4 h-4 fill-current" />
                             </Link>
                             <Link
-                                href="#facebook"
+                                href="https://www.facebook.com/IGNIT3"
                                 aria-label="Facebook"
                                 className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200/80 flex items-center justify-center text-slate-700 hover:text-blue-600 hover:bg-white hover:shadow-sm transition-all"
                             >
@@ -106,7 +106,7 @@ export function Footer() {
                                 <FaInstagram className="w-4 h-4" />
                             </Link>
                             <Link
-                                href="#github"
+                                href="https://github.com/IGNIT3-xD"
                                 aria-label="GitHub"
                                 className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200/80 flex items-center justify-center text-slate-700 hover:text-slate-950 hover:bg-white hover:shadow-sm transition-all"
                             >
@@ -117,30 +117,24 @@ export function Footer() {
 
                     {/* Links Columns (Right Columns) */}
                     <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
-                        {/* Column 1: COMPANY */}
                         <div>
                             <h3 className="text-xs font-bold uppercase tracking-wider text-[#2563eb] mb-5">
-                                COMPANY
+                                Menu
                             </h3>
                             <ul className="space-y-3.5 text-sm font-medium text-slate-600 dark:text-slate-200">
                                 <li>
-                                    <Link href="#about" className="hover:text-slate-900 transition-colors">
-                                        About
+                                    <Link href="/" className="hover:text-slate-900 transition-colors">
+                                        Home
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#features" className="hover:text-slate-900 transition-colors">
-                                        Features
+                                    <Link href="/services" className="hover:text-slate-900 transition-colors">
+                                        Services
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#works" className="hover:text-slate-900 transition-colors">
-                                        Works
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#career" className="hover:text-slate-900 transition-colors">
-                                        Career
+                                    <Link href="/contact-us" className="hover:text-slate-900 transition-colors">
+                                        Contact Us
                                     </Link>
                                 </li>
                             </ul>
@@ -153,13 +147,8 @@ export function Footer() {
                             </h3>
                             <ul className="space-y-3.5 text-sm font-medium text-slate-600 dark:text-slate-200">
                                 <li>
-                                    <Link href="#support" className="hover:text-slate-900 transition-colors">
+                                    <Link href="/contact-us" className="hover:text-slate-900 transition-colors">
                                         Customer Support
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#delivery" className="hover:text-slate-900 transition-colors">
-                                        Delivery Details
                                     </Link>
                                 </li>
                                 <li>
@@ -175,30 +164,29 @@ export function Footer() {
                             </ul>
                         </div>
 
-                        {/* Column 3: RESOURCES */}
                         <div className="col-span-2 sm:col-span-1">
                             <h3 className="text-xs font-bold uppercase tracking-wider text-[#2563eb] mb-5">
-                                RESOURCES
+                                Services
                             </h3>
                             <ul className="space-y-3.5 text-sm font-medium text-slate-600 dark:text-slate-200">
                                 <li>
-                                    <Link href="#ebooks" className="hover:text-slate-900 transition-colors">
-                                        Free eBooks
+                                    <Link href="/" className="hover:text-slate-900 transition-colors">
+                                       Plumbing
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#tutorial" className="hover:text-slate-900 transition-colors">
-                                        Development Tutorial
+                                    <Link href="/" className="hover:text-slate-900 transition-colors">
+                                        Electrical
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#blog" className="hover:text-slate-900 transition-colors">
-                                        How to - Blog
+                                    <Link href="/" className="hover:text-slate-900 transition-colors">
+                                        Carpentry
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="#youtube" className="hover:text-slate-900 transition-colors">
-                                        YouTube Playlist
+                                    <Link href="/" className="hover:text-slate-900 transition-colors">
+                                        Painting
                                     </Link>
                                 </li>
                             </ul>

@@ -2,6 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { SignupForm } from '@/app/auth/_components/signup-form';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Sign Up - Fix It Now',
+    },
+}
 
 export default function SignupPage() {
     return (

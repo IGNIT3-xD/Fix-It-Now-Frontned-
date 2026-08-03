@@ -1,6 +1,13 @@
-
 import { cn } from '@/lib/utils';
 import { ContactPage } from './_components/contact';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Contact Us - Fix It Now',
+    },
+}
+
 const contactPage = () => {
     return (
         <div className={cn(

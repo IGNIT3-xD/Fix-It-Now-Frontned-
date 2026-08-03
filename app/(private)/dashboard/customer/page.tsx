@@ -5,6 +5,13 @@ import { StatsCard } from '../_components/stats-card'
 import { StatsChart } from '../_components/stats-chart'
 import { getMeAction } from './../../../auth/_actions/auth.action';
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Customer Dashboard - Fix It Now',
+    },
+}
 
 async function DashboardContent() {
   const user = await getMeAction()
@@ -26,7 +33,6 @@ async function DashboardContent() {
       </div>
     )
   }
-
 
   const { myTotalBookings = 0, totalPaid = 0, totalReviewsGiven = 0 } = statsResult.data || {}
 

@@ -13,35 +13,30 @@ const socialProof = {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80",
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
     ],
-    text: "Join 4,200+ happy homeowners this month",
+    text: "Join 1,200+ happy homeowners this month",
 }
 
 const programs = [
     {
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop&q=80",
-        category: "IMMEDIATE",
-        title: "Emergency Drain Cleaning",
+        image: "/plumbing.jpg",
+        category: "PLUMBING",
+        title: "Emergency Plumbing Service",
     },
     {
-        image: "https://images.unsplash.com/photo-1542013936693-884638332954?w=600&auto=format&fit=crop&q=80",
-        category: "SYSTEM",
-        title: "Smart Water Heater Install",
+        image: "/electrician.jpg",
+        category: "ELECTRICS",
+        title: "Best Electrical Services",
     },
     {
-        image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&auto=format&fit=crop&q=80",
+        image: "/carpenter.jpg",
         category: "UTILITY",
-        title: "Pipe Leak Maintenance"
+        title: "Best Craftsman Arround The City"
     },
     {
-        image: "https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?w=600&auto=format&fit=crop&q=80",
-        category: "KITCHEN",
-        title: "Modern Fixture Upgrade"
-    },
-    {
-        image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&auto=format&fit=crop&q=80",
-        category: "INSPECTION",
-        title: "Video Camera Line Scan"
-    },
+        image: "/painter.jpg",
+        category: "PAINTING",
+        title: "Modern Home Upgrade"
+    }
 ]
 
 export function HeroSection() {

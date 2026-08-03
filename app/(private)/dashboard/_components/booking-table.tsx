@@ -139,8 +139,6 @@ export function BookingsTable({ bookings }: BookingsTableProps) {
                 setShowStatusDialog(false)
                 setStatusBookingId(null)
                 setSelectedStatus('')
-                // Optionally refresh the page or update the state
-                window.location.reload()
             } else {
                 toast.error(result.message)
             }

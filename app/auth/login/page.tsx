@@ -2,6 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { LoginForm } from './../_components/login-form';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Login - Fix It Now',
+    },
+}
 
 export default function LoginPage() {
   return (

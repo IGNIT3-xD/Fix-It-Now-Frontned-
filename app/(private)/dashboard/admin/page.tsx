@@ -4,6 +4,13 @@ import { adminDashboardStatsAction } from './../_actions/dashboardActions';
 import { StatsChart } from '../_components/stats-chart-admin';
 import { redirect } from 'next/navigation';
 import { getMeAction } from '@/app/auth/_actions/auth.action';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Admin Dashboard - Fix It Now',
+    },
+}
 
 async function DashboardContent() {
   const user = await getMeAction()

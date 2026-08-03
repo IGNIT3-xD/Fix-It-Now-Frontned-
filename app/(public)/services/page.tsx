@@ -4,6 +4,13 @@ import SearchBar from '@/app/(public)/services/_components/searchBar';
 import ServicesFilter from './_components/serviceFilters';
 import CatetegoriesFilters from './_components/catetegoriesFilters';
 import { ServiceCards } from './_components/serviceCards';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: {
+        absolute: 'Services - Fix It Now',
+    },
+}
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 

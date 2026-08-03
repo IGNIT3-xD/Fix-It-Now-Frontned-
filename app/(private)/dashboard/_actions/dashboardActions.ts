@@ -220,6 +220,11 @@ export const createTechnicianProfileAction = async (prevState: PrevState, formDa
         })
 
         const result = await res.json()
+
+        if (result.success) {
+            revalidatePath('/dashboard/technician/profile')
+        }
+
         return result
     } catch (error) {
         console.error('Error creating technician profile:', error)
@@ -313,6 +318,10 @@ export const updateAvailabilityAction = async (
         )
 
         const result = await res.json()
+        if (result.success) {
+            revalidatePath('technician/profile')
+        }
+        
         return result
     } catch (error) {
         console.error('Error updating availability:', error)
